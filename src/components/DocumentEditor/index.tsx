@@ -294,36 +294,6 @@ export const DocumentEditor: React.FC<DocumentEditorProps> = memo(
       return `slate-key-${timestamp}-${randomNumber}`;
     };
 
-    const onOpenChangeUpgrade = (value) => {
-      setOpenUpgrade(value);
-
-      if (value) {
-        router.push({
-          pathname: router.pathname,
-          query: { ...router.query, upgrade: "true" },
-        });
-      } else {
-        router.push(
-          {
-            pathname: router.pathname,
-            query: rest,
-          },
-          undefined,
-          { shallow: true }
-        );
-      }
-    };
-
-    useEffect(() => {
-      if (upgrade) {
-        setOpenUpgrade(Boolean(upgrade));
-      } else {
-        // This line will be executed when upgradePop changes to a falsy value
-
-        setOpenUpgrade(false);
-      }
-    }, [upgrade]);
-
     useEffect(() => {
       setValue(initialSlateValue);
       setFetchWorkspaceIsLoading(false);

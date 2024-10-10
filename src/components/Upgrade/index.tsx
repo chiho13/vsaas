@@ -252,7 +252,7 @@ const Upgrade = () => {
         <div className="w-full px-4">
           <div className="mx-auto mb-[20px] mt-10 max-w-[510px] text-center lg:mb-5">
             <h1 className="mb-7 mr-6 bg-gradient-to-r from-blue-500 to-sky-400 bg-clip-text text-3xl   font-bold text-transparent sm:text-4xl">
-              Supercharge your content
+              Simple Pricing
             </h1>
           </div>
         </div>
@@ -271,28 +271,6 @@ const Upgrade = () => {
                 createCheckoutSession={createCheckoutSession}
               />
             ))}
-          </div>
-        </div>
-        {/* <div className="mx-auto w-full text-center text-[11px]">
-          By clicking the button above to proceed you agree with Vontane's{" "}
-          <a href="https://vontane.com/terms" className="text-brand underline">
-            {" "}
-            TOS
-          </a>
-        </div> */}
-        <div className="flex w-full flex-wrap">
-          <div className=" mx-auto mt-3 px-4 ">
-            <div className="  max-w-[510px] text-center  lg:mb-5">
-              <p className="text-[10px] text-muted-foreground">
-                Text to MP3: 1 Character = 1 Credit
-              </p>
-              <p className="text-[10px] text-muted-foreground">
-                Text to Image: An Image Set show 3 results = 250 Credits
-              </p>
-              <p className="text-[10px] text-muted-foreground">
-                AI Assist: One command = 50 Credits
-              </p>
-            </div>
           </div>
         </div>
       </div>

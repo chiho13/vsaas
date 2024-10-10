@@ -32,7 +32,7 @@ import {
 import LoadingSpinner from "@/icons/LoadingSpinner";
 import { extractTextValues } from "../DocumentEditor/helpers/extractText";
 import { root } from "postcss";
-import { Check, ChevronUp, Info, ListEnd, Send } from "lucide-react";
+import { Check, ChevronUp, Crown, Info, ListEnd, Send } from "lucide-react";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { ChevronDown, Link, Copy } from "lucide-react";
@@ -67,6 +67,8 @@ import { WorkspaceSetting, SetTheme } from "../WorkspaceSetting";
 import { EmbedVideoSettings } from "../EmbedVideoSettings";
 import { DataVisSettings } from "../DataVisSettings";
 import { splitIntoSlides } from "@/utils/renderHelpers";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import Upgrade from "../Upgrade";
 interface RightSideBarProps {
   showRightSidebar: boolean;
   rightSideBarWidth: number;
@@ -105,6 +107,39 @@ export const RightSideBar: React.FC<RightSideBarProps> = ({
 
   const [openChat, setOpenChat] = useLocalStorage("openChat", false);
   const { copied, copyToClipboard: copyLink } = useClipboard();
+
+  const { upgrade, ...rest } = router.query;
+  const [openUpgrade, setOpenUpgrade] = useState(false);
+
+  const onOpenChangeUpgrade = (value) => {
+    setOpenUpgrade(value);
+
+    if (value) {
+      router.push({
+        pathname: router.pathname,
+        query: { ...router.query, upgrade: "true" },
+      });
+    } else {
+      router.push(
+        {
+          pathname: router.pathname,
+          query: rest,
+        },
+        undefined,
+        { shallow: true }
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (upgrade) {
+      setOpenUpgrade(Boolean(upgrade));
+    } else {
+      // This line will be executed when upgradePop changes to a falsy value
+
+      setOpenUpgrade(false);
+    }
+  }, [upgrade]);
 
   const rightSidebarStyle: React.CSSProperties = {
     transform: `translateX(${
@@ -169,6 +204,28 @@ export const RightSideBar: React.FC<RightSideBarProps> = ({
     <AudioManagerProvider>
       <Portal>
         <div className="fixed right-[80px] top-[25px] flex gap-3">
+          <div className="flex items-center">
+            <Dialog open={openUpgrade} onOpenChange={onOpenChangeUpgrade}>
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="xs"
+                  className=" border border-gray-300"
+                  // onClick={upgradeAccount}
+                >
+                  <span className="mr-2 text-xs text-foreground  dark:text-foreground ">
+                    Upgrade
+                  </span>
+                  <Crown className="w-5 fill-orange-200 text-orange-500 dark:text-orange-300" />{" "}
+                </Button>
+              </DialogTrigger>
+
+              <DialogContent className="absolute max-h-[650px]  overflow-y-auto p-0 sm:max-w-[950px]">
+                <Upgrade />
+              </DialogContent>
+            </Dialog>
+          </div>
+
           <SyncStatusIndicator />
           <PublishButton />
         </div>
